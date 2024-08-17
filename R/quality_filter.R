@@ -88,7 +88,7 @@ quality_filter = function(metrics, mito = TRUE, distance = TRUE, coding = TRUE, 
         if (min(seg$psi[,2]) > mito.max) { stop <- 1 }
           while (stop == 1) {
             psi <- psi + 1
-            seg <- segmented::segmented(model, npsi = psi,quant=TRUE)
+            seg <- segmented::segmented(model, npsi = psi,seg.control(quant=TRUE))
             if (psi >= 5 | min(seg$psi[,2]) <= mito.max) { stop <- 0 }
           }		
           mito.thresholds <- c(mito.thresholds, min(seg$psi[,2]))
