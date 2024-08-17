@@ -85,12 +85,12 @@ quality_filter = function(metrics, mito = TRUE, distance = TRUE, coding = TRUE, 
         metrics.subsample <- metrics[ sample(1:nrow(metrics), sample.size),]
         model <- lm(logFeatures ~ mitochondrial_fraction, data = metrics.subsample)
 	      print("mo")
-        seg <- segmented::segmented(model, npsi = psi,seg.control(quant=TRUE))
+        seg <- segmented::segmented(model, npsi = psi,seg.control(quant=TRUE),decreasing = TRUE)
         if (min(seg$psi[,2]) > mito.max) { stop <- 1 }
           while (stop == 1) {
             psi <- psi + 1
 		  print("modify_1")
-            seg <- segmented::segmented(model, npsi = psi,seg.control(quant=TRUE))
+            seg <- segmented::segmented(model, npsi = psi,seg.control(quant=TRUE),decreasing = TRUE)
             if (psi >= 5 | min(seg$psi[,2]) <= mito.max) { stop <- 0 }
           }		
           mito.thresholds <- c(mito.thresholds, min(seg$psi[,2]))
@@ -127,7 +127,7 @@ quality_filter = function(metrics, mito = TRUE, distance = TRUE, coding = TRUE, 
       model <- lm(logFeatures ~ logUMIs, data = metrics)
       while (floor(npsi) >= 1) {
 	      print("modify")
-	out <- suppressWarnings(segmented::segmented(model, npsi = floor(npsi),seg.control(quant=TRUE)))
+	out <- suppressWarnings(segmented::segmented(model, npsi = floor(npsi),seg.control(quant=TRUE),decreasing = TRUE))
 	if (class(out)[1] == "segmented") {
 	  print("warning")
 		npsi <- floor(npsi)
