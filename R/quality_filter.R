@@ -127,7 +127,7 @@ quality_filter = function(metrics, mito = TRUE, distance = TRUE, coding = TRUE, 
       model <- lm(logFeatures ~ logUMIs, data = metrics)
       while (floor(npsi) >= 1) {
 	      print("modify")
-	out <- suppressWarnings(segmented::segmented(model, npsi = floor(npsi),seg.control(quant=TRUE),decreasing = TRUE))
+	out <- suppressWarnings(segmented::segmented(model, npsi = floor(npsi))
 	if (class(out)[1] == "segmented") {
 	  print("warning")
 		npsi <- floor(npsi)
